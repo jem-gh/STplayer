@@ -1,0 +1,58 @@
+
+###############################################################################
+# STconverter 2 allows you to execute Python scripts written for SimpleGUI on 
+# a machine configured with Tkinter GUI instead. 
+# 
+# STconverter 2 is the successor of STconverter, and is different in such ways 
+# it has been entirely rewritten to handle with a totally different approach 
+# the "conversion". 
+# While the first version of STconverter was converting each SimpleGUI operation 
+# in the user code to be executable by Tkinter, STconverter 2 is an API between 
+# SimpleGUI operations and Tkinter. 
+# 
+# "Tkinter is Python's de-facto standard GUI (Graphical User Interface) package"
+# (http://wiki.python.org/moin/TkInter)
+# "SimpleGUI is a custom Python graphical user interface (GUI) module implemented 
+# directly in CodeSkulptor that provides an easy to learn interface for building 
+# interactive programs in Python" (http://www.codeskulptor.org) used for the 
+# online Coursera course "An Introduction to Interactive Programming in Python" 
+# by Joe Warren, Scott Rixner, John Greiner, and Stephen Wong (Rice University) 
+# 
+# I want to thank Amín Guzmán for his comments and suggestions on how to improve 
+# STconverter, which lead to the development of STconverter 2
+# 
+# For the latest version of STConverter 2 visit the repository on Github: 
+# https://github.com/jem-gh/STconverter-2
+# 
+# STconverter 2 is developed by Jean-Etienne Morlighem
+###############################################################################
+
+
+
+STILL IN EARLY STAGES OF DEVELOPMENT!
+FEW METHODS ARE SUPPORTED SO FAR!
+
+
+
+HOW TO USE
+
+Download the simplegui2tkinter.py API file.
+
+Copy it in the Python working directory.
+
+On your SimpleGUi file, just modify:
+	import simplegui
+by
+	import simplegui2tkinter as simplegui
+
+
+
+
+ACKNOWLEDGEMENT
+
+I want to thank Amín Guzmán for his comments and suggestions on how to improve 
+the first version of STconverter, which lead to the development of STconverter 2
+
+
+
+
