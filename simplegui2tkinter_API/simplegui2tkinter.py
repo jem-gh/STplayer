@@ -34,7 +34,7 @@ import Tkinter
 
 
 # Adjust the Canvas refresh rate
-CANVAS_REFRESH_RATE = 66 # in ms (66ms~15fps; 33ms~30fps; 17ms~60fps)
+CANVAS_REFRESH_RATE = 17 # in ms (66ms~15fps; 33ms~30fps; 17ms~60fps)
 
 # SimpleGUI and  Tkinter use different units for Buttons and Inputs
 # adjust Button and Input size ratio
@@ -136,7 +136,8 @@ class create_frame(__init__):
     
     
     def set_mouseclick_handler(self, mouse_handler):
-        pass
+        """ Call the mouse class when a left-click occurs """
+        STconverter_mouse('<Button-1>', mouse_handler)
     
     
     def set_mousedrag_handler(self, mouse_handler):
@@ -332,16 +333,25 @@ class STconverter_key(__init__):
         return the value to the key handler """
     
     def __init__(self, mode, key_handler):
-        
         self.key_handler = key_handler
-        
         self.window_root.bind(mode, self.call_handler)
-        
     
     def call_handler(self, key):
         """ Return the key value to the key handler """
-        
         self.key_handler( KEY_MAP[key.keysym] )
+
+
+
+class STconverter_mouse(__init__):
+    """ Retrieve the mouse coordinate during a mouse event (click or drag) """
+    
+    def __init__(self, mode, mouse_handler):
+        self.mouse_handler = mouse_handler
+        self.window_root.bind(mode, self.call_handler)
+        
+    def call_handler(self, coordinate):
+        """ Return the coordinate of the mouse """
+        self.mouse_handler( (coordinate.x, coordinate.y) )
 
 
 
