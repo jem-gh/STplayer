@@ -18,7 +18,7 @@
 # online Coursera course "An Introduction to Interactive Programming in Python" 
 # by Joe Warren, Scott Rixner, John Greiner, and Stephen Wong (Rice University) 
 # 
-# I want to thank Amín Guzmán for his comments and suggestions on how to improve 
+# I want to thank Amin Guzman for his comments and suggestions on how to improve 
 # STconverter, which lead to the development of STconverter 2
 # 
 # For the latest version of STConverter 2 visit the repository on Github: 
@@ -40,18 +40,23 @@ INPUT_SIZE_RATIO = 0.12
 
 
 
-class create_frame:
-    """ Initialize the root window with a frame widget, and handle all user's 
+class __init__:
+    """ Initialize the root window the first time simplegui2tkinter is called """
+    window_root = Tkinter.Tk()
+
+
+
+class create_frame(__init__):
+    """ Set the root window title, create a frame widget, and handle all user's 
         code methods associated to the frame ("frame.xxx"). 
         Called from the user's code with the "simplegui.create_frame" method. 
         A canvas widget is created only if required by using the method 
         "frame.set_draw_handler". """
     
     def __init__(self, title, canvas_width, canvas_height, control_width = 200):
-        """ initialize the root window and create the frame widget """
+        """ Set the root window title and create the frame widget """
         
-        # initiate and set the root window title
-        self.window_root = Tkinter.Tk()
+        # set the root window title
         self.window_root.title(title)
         
         # create the frame
@@ -62,10 +67,10 @@ class create_frame:
         self.canvas_width = canvas_width        # by canvas
         self.canvas_height = canvas_height      # by canvas
         self.control_width = control_width      # by label, button, input
-        
+    
     
     def start(self):
-        """ Initiate the loop event of the GUI """
+        """ Initiate the loop event of the root window """
         self.window_root.mainloop()
     
     
@@ -102,7 +107,7 @@ class create_frame:
     
     
     def add_input(self, text, input_handler, width):
-        """ Call the input and label classed to add an input on the frame and 
+        """ Call the input and label classes to add an input on the frame and 
             its corresponding label """
         
         # adjust the control width in case the input is larger 
@@ -113,6 +118,22 @@ class create_frame:
         
         Frame_label(self.frame, text, label_width)
         Frame_input(self.frame, input_handler, width)
+
+
+
+class create_timer(__init__):
+    """ Create and control a timer with its associated handler by calling the 
+        STconverter_timer class. 
+        Called from the user's code with the "simplegui.create_timer" method. """
+    
+    def __init__(self, interval, timer_handler):
+        self.t = STconverter_timer(self.window_root, interval, timer_handler)
+    
+    def start(self):
+        self.t.set_status(True)
+    
+    def stop(self):
+        self.t.set_status(False)
 
 
 
@@ -128,7 +149,7 @@ class ST_canvas:
         
         self.canvas = Tkinter.Canvas(frame, width = int(canvas_width), 
                                      height = int(canvas_height))
-        self.canvas.pack(side='right')
+        self.canvas.pack(side = 'right')
         self.canvas.configure(background = "Black")
     
     
@@ -148,14 +169,14 @@ class ST_canvas:
         self.draw_handler(self)
     
     
-    def draw_text(self, text, point, font_size, font_color):
+    def draw_text(self, text, position, font_size, font_color):
         """ Call the text class to add a text item on the canvas """
-        Canvas_text(self.canvas, text, point, font_size, font_color)
+        Canvas_text(self.canvas, text, position, font_size, font_color)
     
     
-    def draw_circle(self, center_point, radius, line_width, line_color, fill_color=""):
+    def draw_circle(self, center, radius, line_width, line_color, fill_color=""):
         """ Call the oval class to add a circle/oval item on the canvas """
-        Canvas_oval(self.canvas, center_point, radius, line_width, line_color, fill_color)
+        Canvas_oval(self.canvas, center, radius, line_width, line_color, fill_color)
     
     
     def draw_line(self, point1, point2, line_width, line_color):
@@ -163,9 +184,9 @@ class ST_canvas:
         Canvas_line(self.canvas, (point1, point2), line_width, line_color)
     
     
-    def draw_polygon(self, point_list, line_width, line_color, fill_color = ""):
+    def draw_polygon(self, points, line_width, line_color, fill_color = ""):
         """ Call the polygon class to add a polygon item on the canvas """
-        Canvas_polygon(self.canvas, point_list, line_width, line_color, fill_color)
+        Canvas_polygon(self.canvas, points, line_width, line_color, fill_color)
 
 
 
@@ -173,7 +194,7 @@ class Frame_label:
     """ Add a label widget on the left side of the frame """
     
     def __init__(self, frame, text, width):
-        self = Tkinter.Label(frame, text = text, wraplength = width)
+        self = Tkinter.Label(frame, text = text, wraplength = int(width))
         self.pack()
 
 
@@ -210,11 +231,11 @@ class Frame_input:
 class Canvas_text:
     """ Add a text item on the canvas """
     
-    def __init__(self, canvas, text, point, font_size, font_color):
+    def __init__(self, canvas, text, position, font_size, font_color):
         
         # adjust the position of the text for the bottom-left corner being 
         # at the points position
-        x, y = point
+        x, y = position
         y += int(font_size / 3)
         
         canvas.create_text([x, y], anchor='sw', text = text, fill = font_color, 
@@ -225,10 +246,10 @@ class Canvas_text:
 class Canvas_oval:
     """ Add an oval item on the canvas """
     
-    def __init__(self, canvas, center_point, radius, line_width, line_color, fill_color):
+    def __init__(self, canvas, center, radius, line_width, line_color, fill_color):
         
         # go from a center-radius reference to an ellipse coordinates
-        x, y = center_point
+        x, y = center
         coordinates = ((x - radius), (y - radius), (x + radius), (y + radius))
         
         canvas.create_oval(coordinates, width = line_width, 
@@ -247,9 +268,9 @@ class Canvas_line:
 class Canvas_polygon:
     """ Add a polygon item on the canvas """
     
-    def __init__(self, canvas, point_list, line_width, line_color, fill_color):
-        canvas.create_polygon(point_list, width = line_width, 
-                              outline = line_color, fill = fill_color)
+    def __init__(self, canvas, points, line_width, line_color, fill_color):
+        canvas.create_polygon(points, width = line_width, outline = line_color, 
+                              fill = fill_color)
 
 
 
@@ -257,8 +278,8 @@ class STconverter_timer:
     """ Create a timer which will execute repeatedly a function at a given 
         interval of time """
     
-    def __init__(self, root, interval, function):
-        self.root = root
+    def __init__(self, instance_root, interval, function):
+        self.instance_root = instance_root
         self.interval = int(interval)
         self.function = function
         self.status = False
@@ -270,7 +291,7 @@ class STconverter_timer:
     
     def run(self):
         if self.status:
-            self.root.after(self.interval, self.run)
+            self.instance_root.after(self.interval, self.run)
             self.function()
 
 
