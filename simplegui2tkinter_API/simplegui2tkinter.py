@@ -169,6 +169,19 @@ class create_timer(__init__):
 
 
 
+# dictionary of colors sometimes not recognized with their names and HEX values 
+COLORS_PROB = {"aqua":      '#00FFFF', "Aqua":      '#00FFFF', 
+               "fuchsia":   '#FF00FF', "Fuchsia":   '#FF00FF', 
+               "lime":      '#00FF00', "Lime":      '#00FF00', 
+               "olive":     '#808000', "Olive":     '#808000', 
+               "silver":    '#C0C0C0', "Silver":    '#C0C0C0', 
+               "teal":      '#008080', "Teal":      '#008080'}
+
+def check_color(color):
+    return COLORS_PROB[color] if color in COLORS_PROB else color
+
+
+
 class ST_canvas:
     """ Create a canvas widget on the right side of the frame, and handle all 
         user's code methods associated to the canvas ("canvas.xxx"). 
@@ -181,12 +194,12 @@ class ST_canvas:
         self.canvas = Tkinter.Canvas(frame, width = int(canvas_width), 
                                      height = int(canvas_height))
         self.canvas.pack(side = 'right')
-        self.canvas.configure(background = background_color)
+        self.canvas.configure(background = check_color(background_color))
     
     
     def new_background_color(self, color):
         """ Set a new background color for the canvas """
-        self.canvas.configure(background = color)
+        self.canvas.configure(background = check_color(color))
     
     
     def set_draw_handler(self, draw_handler):
@@ -202,21 +215,25 @@ class ST_canvas:
     
     def draw_text(self, text, position, font_size, font_color):
         """ Call the text class to add a text item on the canvas """
+        font_color = check_color(font_color)
         Canvas_text(self.canvas, text, position, font_size, font_color)
     
     
     def draw_circle(self, center, radius, line_width, line_color, fill_color=""):
         """ Call the oval class to add a circle/oval item on the canvas """
+        line_color, fill_color = check_color(line_color), check_color(fill_color)
         Canvas_oval(self.canvas, center, radius, line_width, line_color, fill_color)
     
     
     def draw_line(self, point1, point2, line_width, line_color):
         """ Call the line class to add a line item on the canvas """
+        line_color = check_color(line_color)
         Canvas_line(self.canvas, (point1, point2), line_width, line_color)
     
     
     def draw_polygon(self, points, line_width, line_color, fill_color = ""):
         """ Call the polygon class to add a polygon item on the canvas """
+        line_color, fill_color = check_color(line_color), check_color(fill_color)
         Canvas_polygon(self.canvas, points, line_width, line_color, fill_color)
 
 
@@ -234,7 +251,6 @@ class Frame_label:
     
     def set_text(self, text):
         """ Update the label text """
-        
         self.label_text.set(text)
 
 
@@ -263,7 +279,6 @@ class Frame_input:
     
     def call_handler(self, input_value):
         """ Return the value entered in the input to the input handler """
-        
         self.input_handler(self.input.get())
 
 
