@@ -36,6 +36,9 @@ import Tkinter
 # Adjust the Canvas refresh rate
 CANVAS_REFRESH_RATE = 17 # in ms (66ms~15fps; 33ms~30fps; 17ms~60fps)
 
+# Canvas background default color
+CANVAS_BACKGROUND = "Black"
+
 # SimpleGUI and  Tkinter use different units for Buttons and Inputs
 # adjust Button and Input size ratio
 BUTTON_SIZE_RATIO = 0.09
@@ -67,9 +70,10 @@ class create_frame(__init__):
         self.frame.pack()
         
         # variables used by other methods
-        self.canvas_width = canvas_width        # by canvas
-        self.canvas_height = canvas_height      # by canvas
-        self.control_width = control_width      # by label, button, input
+        self.canvas_width = canvas_width            # by canvas
+        self.canvas_height = canvas_height          # by canvas
+        self.canvas_background = CANVAS_BACKGROUND  # by canvas
+        self.control_width = control_width          # by label, button, input
     
     
     def start(self):
@@ -83,7 +87,8 @@ class create_frame(__init__):
             the drawing. """
         
         # create the canvas
-        self.canvas = ST_canvas(self.frame, self.canvas_width, self.canvas_height)
+        self.canvas = ST_canvas(self.frame, self.canvas_width, 
+                                self.canvas_height, self.canvas_background)
         
         # call the canvas method to set the canvas drawing handler
         self.canvas.set_draw_handler(draw_handler)
@@ -96,7 +101,10 @@ class create_frame(__init__):
     
     def set_canvas_background(self, color):
         """ Call the canvas method to set a new background """
-        self.canvas.new_background_color(color)
+        try:
+            self.canvas.new_background_color(color)
+        except AttributeError:
+            self.canvas_background = color
     
     
     def add_label(self, text):
@@ -167,14 +175,13 @@ class ST_canvas:
         Called by a redirect from the "create_frame" class which was called from 
         the user's code with the "frame.set_draw_handler" method. """
     
-    def __init__(self, frame, canvas_width, canvas_height):
-        """ Create a canvas on the right side of the frame with a default black 
-            background """
+    def __init__(self, frame, canvas_width, canvas_height, background_color):
+        """ Create a canvas on the right side of the frame """
         
         self.canvas = Tkinter.Canvas(frame, width = int(canvas_width), 
                                      height = int(canvas_height))
         self.canvas.pack(side = 'right')
-        self.canvas.configure(background = "Black")
+        self.canvas.configure(background = background_color)
     
     
     def new_background_color(self, color):
