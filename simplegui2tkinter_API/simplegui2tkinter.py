@@ -35,6 +35,8 @@ import Tkinter
 
 CANVAS_REFRESH_RATE = 66 # in ms (66ms~15fps; 33ms~30fps; 17ms~60fps)
 
+# SimpleGUI and  Tkinter use different units for Buttons and Inputs
+# adjust Button and Input size ratio
 BUTTON_SIZE_RATIO = 0.09
 INPUT_SIZE_RATIO = 0.12
 
@@ -96,12 +98,17 @@ class create_frame(__init__):
         self.canvas.new_background_color(color)
     
     
+    def add_label(self, text):
+        """ Call the label class to add a label on the frame """
+        
+        return Frame_label(self.frame, text, self.control_width)
+    
+    
     def add_button(self, text, button_handler, width = 0):
         """ Call the button class to add a button on the frame """
         
-        # adjust the control width in case the button is larger 
-        if self.control_width < width:
-            self.control_width = width
+        # adjust the width if its larger than the expected control width 
+        width = self.control_width if self.control_width < width else width
         
         Frame_button(self.frame, text, button_handler, width)
     
@@ -110,13 +117,10 @@ class create_frame(__init__):
         """ Call the input and label classes to add an input on the frame and 
             its corresponding label """
         
-        # adjust the control width in case the input is larger 
-        if self.control_width < width:
-            self.control_width = width
+        # adjust the width if its larger than the expected control width 
+        width = self.control_width if self.control_width < width else width
         
-        label_width = self.control_width if self.control_width > width else width
-        
-        Frame_label(self.frame, text, label_width)
+        Frame_label(self.frame, text, self.control_width)
         Frame_input(self.frame, input_handler, width)
 
 
@@ -194,8 +198,17 @@ class Frame_label:
     """ Add a label widget on the left side of the frame """
     
     def __init__(self, frame, text, width):
-        self = Tkinter.Label(frame, text = text, wraplength = int(width))
-        self.pack()
+        self.label_text = Tkinter.StringVar()
+        self.label_text.set(text)
+        self.label = Tkinter.Label(frame, textvariable = self.label_text, 
+                                   wraplength = int(width))
+        self.label.pack()
+    
+    
+    def set_text(self, text):
+        """ Update the label text """
+        
+        self.label_text.set(text)
 
 
 
