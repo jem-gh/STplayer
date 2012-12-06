@@ -33,6 +33,7 @@ import Tkinter
 
 
 
+# Adjust the Canvas refresh rate
 CANVAS_REFRESH_RATE = 66 # in ms (66ms~15fps; 33ms~30fps; 17ms~60fps)
 
 # SimpleGUI and  Tkinter use different units for Buttons and Inputs
@@ -87,10 +88,10 @@ class create_frame(__init__):
         # call the canvas method to set the canvas drawing handler
         self.canvas.set_draw_handler(draw_handler)
         
-        # start the refresh
-        t = STconverter_timer(self.window_root, CANVAS_REFRESH_RATE, 
-                              self.canvas.refresh_canvas)
-        t.set_status(True)
+        # create and start the refresh process of the canvas
+        refresh = STconverter_timer(self.window_root, CANVAS_REFRESH_RATE, 
+                                    self.canvas.refresh_canvas)
+        refresh.set_status(True)
     
     
     def set_canvas_background(self, color):
@@ -122,6 +123,24 @@ class create_frame(__init__):
         
         Frame_label(self.frame, text, self.control_width)
         Frame_input(self.frame, input_handler, width)
+    
+    
+    def set_keydown_handler(self, key_handler):
+        """ Call the key class when a key is pressed """
+        STconverter_key('<Key>', key_handler)
+    
+    
+    def set_keyup_handler(self, key_handler):
+        """ Call the key class when a key is released """
+        STconverter_key('<KeyRelease>', key_handler)
+    
+    
+    def set_mouseclick_handler(self, mouse_handler):
+        pass
+    
+    
+    def set_mousedrag_handler(self, mouse_handler):
+        pass
 
 
 
@@ -284,6 +303,45 @@ class Canvas_polygon:
     def __init__(self, canvas, points, line_width, line_color, fill_color):
         canvas.create_polygon(points, width = line_width, outline = line_color, 
                               fill = fill_color)
+
+
+
+# key and key values dictionary
+KEY_MAP = {"0": 48, "1": 49, "2": 50, "3": 51, "4": 52, "5": 53, "6": 54, 
+           "7": 55, "8": 56, "9": 57, "A": 65, "B": 66, "C": 67, "D": 68, 
+           "E": 69, "F": 70, "G": 71, "H": 72, "I": 73, "J": 74, "K": 75, 
+           "L": 76, "M": 77, "N": 78, "O": 79, "P": 80, "Q": 81, "R": 82, 
+           "S": 83, "T": 84, "U": 85, "V": 86, "W": 87, "X": 88, "Y": 89, 
+           "Z": 90, "a": 97, "b": 98, "c": 99, "d": 100, "e": 101, "f": 102, 
+           "g": 103, "h": 104, "i": 105, "j": 106, "k": 107, "l": 108, 
+           "m": 109, "n": 110, "o": 111, "p": 112, "q": 113, "r": 114, 
+           "s": 115, "t": 116, "u": 117, "v": 118, "w": 119, "x": 120, 
+           "y": 121, "z": 122, "BackSpace": 65288, "Tab": 65289, "Return": 65293, 
+           "Pause": 65299, "Escape": 65307, "Home": 65360, "Left": 65361, 
+           "Up": 65362, "Right": 65363, "Down": 65364, "Prior": 65365, 
+           "Next": 65366, "End": 65367, "space": 32, "Shift_L": 65505, 
+           "Shift_R": 65506, "Control_L": 65507, "Control_R": 65508, 
+           "Caps_Lock": 65509, "Alt_L": 65513, "Alt_R": 65514, "Delete": 65535, 
+           "tab": 65289, "return": 65293, "escape": 65307, "left": 65361, 
+           "up": 65362, "right": 65363, "down": 65364, "Space": 32}
+
+
+
+class STconverter_key(__init__):
+    """ Retrieve associated key value when a key is pressed or released and 
+        return the value to the key handler """
+    
+    def __init__(self, mode, key_handler):
+        
+        self.key_handler = key_handler
+        
+        self.window_root.bind(mode, self.call_handler)
+        
+    
+    def call_handler(self, key):
+        """ Return the key value to the key handler """
+        
+        self.key_handler( KEY_MAP[key.keysym] )
 
 
 
