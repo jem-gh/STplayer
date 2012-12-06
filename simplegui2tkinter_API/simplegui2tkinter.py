@@ -231,6 +231,12 @@ class ST_canvas:
         Canvas_line(self.canvas, (point1, point2), line_width, line_color)
     
     
+    def draw_polyline(self, points, line_width, line_color):
+        """ Call the line class to add a polyline item on the canvas """
+        line_color = check_color(line_color)
+        Canvas_line(self.canvas, points, line_width, line_color)
+    
+    
     def draw_polygon(self, points, line_width, line_color, fill_color = ""):
         """ Call the polygon class to add a polygon item on the canvas """
         line_color, fill_color = check_color(line_color), check_color(fill_color)
@@ -316,6 +322,8 @@ class Canvas_line:
     """ Add a line item on the canvas """
     
     def __init__(self, canvas, points, line_width, line_color):
+        # duplicate first point in case only one point was given
+        points = points[0], points
         canvas.create_line(points, width = line_width, fill = line_color)
 
 
