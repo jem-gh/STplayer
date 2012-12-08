@@ -47,4 +47,3 @@ class Timer:
         self.is_running = False
         self.timer.join()
 
-
