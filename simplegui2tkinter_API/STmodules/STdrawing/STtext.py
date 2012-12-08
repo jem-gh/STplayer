@@ -16,7 +16,7 @@ class Text:
         y += int(font_size / 3)
         
         canvas.create_text([x, y], anchor='sw', text = text, fill = font_color, 
-                           font = ('DejaVu Serif Condensed', font_size))
+                           font = ('DejaVu Serif Condensed', int(font_size)))
 
 
 

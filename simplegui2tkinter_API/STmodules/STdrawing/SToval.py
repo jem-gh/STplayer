@@ -11,10 +11,10 @@ class Oval:
     def __init__(self, canvas, center, radius, line_width, line_color, fill_color):
         
         # go from a center-radius reference to an ellipse coordinates
-        x, y = center
-        coordinates = ((x - radius), (y - radius), (x + radius), (y + radius))
+        coordinates = (int(center[0] - radius), int(center[1] - radius), 
+                       int(center[0] + radius), int(center[1] + radius))
         
-        canvas.create_oval(coordinates, width = line_width, 
+        canvas.create_oval(coordinates, width = int(line_width), 
                            outline = line_color, fill = fill_color)
 
 

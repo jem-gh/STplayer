@@ -35,6 +35,7 @@
 
 from STmodules import STframe
 from STmodules import STtimer
+from STmodules.STlibrary import KEY_MAP
 
 
 
