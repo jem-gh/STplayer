@@ -16,14 +16,22 @@ class Timer:
 
     def __init__(self, interval, function):
         
-        self.interval = interval / 1000.0
+        self.interval = interval / 1000.0       # from milliseconds to seconds
         self.function = function
         
         self.is_running = False
+        
+        self.is_last_thread = False
     
     
     def run_timer(self):
-        while self.is_running and enumerate()[0].is_alive():
+        # verify if the timer is initiated as the last thread of the main program
+        self.is_last_thread = not enumerate()[0].is_alive()
+        
+        # keep the timer running (1) until the "stop" method is called, or (2) 
+        # as long as the main application is running, or (3) forever in case of 
+        # a "last_thread" timer 
+        while self.is_running and (enumerate()[0].is_alive() or self.is_last_thread):
             self.function()
             sleep(self.interval)
     
@@ -36,12 +44,7 @@ class Timer:
     
     
     def stop(self):
-        self.running = False
+        self.is_running = False
         self.timer.join()
-
-
-
-
-
 
 
