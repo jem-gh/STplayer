@@ -32,6 +32,8 @@ class Image_process:
     
     
     def process(self, src_coor, src_size, dest_size, angle_d, ID):
+        """ Crop, resize, rotate an image, and convert it in Tkinter format """
+        
         x1, y1 = (src_coor[0]-src_size[0]/2), (src_coor[1]-src_size[1]/2)
         x2, y2 = (src_coor[0]+src_size[0]/2), (src_coor[1]+src_size[1]/2)
         # crop
@@ -47,6 +49,8 @@ class Image_process:
     
     
     def update(self, src_coor, src_size, dest_size, angle):
+        """ return a processed image with a defined size and angle """
+        
         # convert angle from radians to degrees
         angle_d = int((angle * 180 / 3.1416) % 360)
         # create the rendering image ID
@@ -56,6 +60,15 @@ class Image_process:
             self.process(src_coor, src_size, dest_size, angle_d, ID)
         # return the processed image
         return self.tiles[ID]
-
+    
+    
+    def get_width(self):
+        """ return the width of the source image in pixels """
+        return self.img.size[0]
+    
+    
+    def get_height(self):
+        """ return the height of the source image in pixels """
+        return self.img.size[1]
 
 
