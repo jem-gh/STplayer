@@ -5,7 +5,7 @@
 
 
 
-# SUPPORT LIBRARY
+# SUPPORT LIBRARIES
 
 
 

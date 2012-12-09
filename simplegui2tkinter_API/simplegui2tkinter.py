@@ -33,8 +33,14 @@
 
 
 
-from STmodules import STframe
-from STmodules import STtimer
+import urllib
+
+try:
+    from PIL import Image
+except ImportError:
+    print "Python Imaging Library not found"
+
+from STmodules import STframe, STtimer, STimage
 from STmodules.STlibrary import KEY_MAP
 
 
@@ -51,8 +57,10 @@ def create_timer(interval, timer_handler):
 
 
 
-def load_image():
-    pass
+def load_image(link):
+    """ Called from the user's code with the "simplegui.load_image" method. """
+    image = Image.open(urllib.urlretrieve( link )[0])
+    return STimage.Image_process(image)
 
 
 

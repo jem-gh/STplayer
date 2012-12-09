@@ -10,6 +10,7 @@ import Tkinter
 from STlibrary import check_color, CANVAS
 from STdrawing import STtext, SToval, STline, STpolygon
 import STmouse
+from STimage import Image_process
 
 
 
@@ -78,6 +79,12 @@ class Canvas:
         """ Call the polygon class to add a polygon item on the canvas """
         line_color, fill_color = check_color(line_color), check_color(fill_color)
         STpolygon.polygon(self.canvas, points, line_width, line_color, fill_color)
+    
+    
+    def draw_image(self, image, src_coor, src_size, dest_coor, dest_size, angle = 0):
+        """ Process an image by calling the Image_process class and draw it """
+        img = Image_process.update(image, src_coor, src_size, dest_size, angle)
+        self.canvas.create_image(dest_coor, image=img)
     
     
     def set_mouseclick_handler(self, mouse_handler):
