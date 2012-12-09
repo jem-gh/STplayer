@@ -53,35 +53,34 @@ class Canvas:
     def draw_text(self, text, position, font_size, font_color):
         """ Call the text class to add a text item on the canvas """
         font_color = check_color(font_color)
-        STtext.Text(self.canvas, text, position, font_size, font_color)
+        STtext.text(self.canvas, text, position, font_size, font_color)
     
     
     def draw_circle(self, center, radius, line_width, line_color, fill_color=""):
         """ Call the oval class to add a circle/oval item on the canvas """
         line_color, fill_color = check_color(line_color), check_color(fill_color)
-        SToval.Oval(self.canvas, center, radius, line_width, line_color, fill_color)
+        SToval.oval(self.canvas, center, radius, line_width, line_color, fill_color)
     
     
     def draw_line(self, point1, point2, line_width, line_color):
         """ Call the line class to add a line item on the canvas """
         line_color = check_color(line_color)
-        STline.Line(self.canvas, (point1, point2), line_width, line_color)
+        STline.line(self.canvas, (point1, point2), line_width, line_color)
     
     
     def draw_polyline(self, points, line_width, line_color):
         """ Call the line class to add a polyline item on the canvas """
         line_color = check_color(line_color)
-        STline.Line(self.canvas, points, line_width, line_color)
+        STline.line(self.canvas, points, line_width, line_color)
     
     
     def draw_polygon(self, points, line_width, line_color, fill_color = ""):
         """ Call the polygon class to add a polygon item on the canvas """
         line_color, fill_color = check_color(line_color), check_color(fill_color)
-        STpolygon.Polygon(self.canvas, points, line_width, line_color, fill_color)
+        STpolygon.polygon(self.canvas, points, line_width, line_color, fill_color)
     
     
     def set_mouseclick_handler(self, mouse_handler):
         """ Call the mouse class when a left-click mouse event occurs """
         STmouse.Mouse(self.canvas, '<Button-1>', mouse_handler)
-
 
