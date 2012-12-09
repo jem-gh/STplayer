@@ -16,7 +16,8 @@ def create_ID(params):
 
 
 class Image_process:
-    """ Store, process, and convert images to a Tkinter-compatible format. 
+    """ Store, process, and convert images to a Tkinter-compatible format by 
+        using the Python Imaging Library (PIL). 
         Actual image processing operations are: crop, resize, rotate. 
         Both images and their processed results are stored for a faster re-use. 
         

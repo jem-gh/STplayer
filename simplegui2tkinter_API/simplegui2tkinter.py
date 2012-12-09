@@ -40,7 +40,7 @@ try:
 except ImportError:
     print "Python Imaging Library not found"
 
-from STmodules import STframe, STtimer, STimage
+from STmodules import STframe, STtimer, STimage, STmusic
 from STmodules.STlibrary import KEY_MAP
 
 
@@ -64,11 +64,10 @@ def load_image(link):
 
 
 
-def load_sound():
-    pass
-
-
-
-
+def load_sound(link):
+    """ Called from the user's code with the "simplegui.load_sound" method. """
+    music = urllib.urlretrieve( link )[0]
+    print music
+    return STmusic.Music(music)
 
 
