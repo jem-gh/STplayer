@@ -5,8 +5,11 @@
 
 
 
-import pygame
-pygame.mixer.init()
+try:
+    import pygame
+    pygame.mixer.init()
+except ImportError:
+    print "pygame not found"
 
 
 
@@ -17,10 +20,13 @@ class Music:
     def __init__(self, music):
         self.music = pygame.mixer.Sound(music)
         self.music.set_volume( 1.0 )
+        self.is_playing = False
     
     
     def play(self):
-        self.music.play()
+        if not self.is_playing:
+            self.is_playing = True
+            self.music.play()
     
     
     def pause(self):

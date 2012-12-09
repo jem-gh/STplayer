@@ -7,8 +7,7 @@
 
 import Tkinter
 
-import STcanvas
-import STkey
+import STcanvas, STkey
 from STwidgets import STlabel, STbutton, STinput
 
 

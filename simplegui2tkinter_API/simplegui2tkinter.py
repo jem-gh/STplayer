@@ -35,11 +35,6 @@
 
 import urllib
 
-try:
-    from PIL import Image
-except ImportError:
-    print "Python Imaging Library not found"
-
 from STmodules import STframe, STtimer, STimage, STmusic
 from STmodules.STlibrary import KEY_MAP
 
@@ -59,7 +54,7 @@ def create_timer(interval, timer_handler):
 
 def load_image(link):
     """ Called from the user's code with the "simplegui.load_image" method. """
-    image = Image.open(urllib.urlretrieve( link )[0])
+    image = urllib.urlretrieve( link )[0]
     return STimage.Image_process(image)
 
 
@@ -67,7 +62,6 @@ def load_image(link):
 def load_sound(link):
     """ Called from the user's code with the "simplegui.load_sound" method. """
     music = urllib.urlretrieve( link )[0]
-    print music
     return STmusic.Music(music)
 
 

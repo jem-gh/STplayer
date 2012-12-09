@@ -25,7 +25,7 @@ class Canvas:
         
         self.canvas = Tkinter.Canvas(frame, width = int(width), 
                                      height = int(height))
-        self.canvas.pack(side = 'right')
+        self.canvas.pack(side = CANVAS["POSITION"])
         self.canvas.configure(background = check_color(CANVAS["BACKGROUND_COLOR"]))
     
     

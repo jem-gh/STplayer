@@ -14,6 +14,8 @@ CANVAS = {
     "BACKGROUND_COLOR": "Black", 
     # Adjust the Canvas refresh time in ms (66ms~15fps; 33ms~30fps; 17ms~60fps)
     "REFRESH_TIME": 17, 
+    # Canvas position on which side of the control panel
+    "POSITION": 'right', 
 }
 
 

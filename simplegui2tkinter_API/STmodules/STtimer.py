@@ -44,6 +44,7 @@ class Timer:
     
     
     def stop(self):
-        self.is_running = False
-        self.timer.join()
+        if self.is_running:
+            self.is_running = False
+            self.timer.join()
 

@@ -5,7 +5,10 @@
 
 
 
-from PIL import Image, ImageTk
+try:
+    from PIL import Image, ImageTk
+except ImportError:
+    print "Python Imaging Library (PIL) not found"
 
 
 
@@ -28,7 +31,7 @@ class Image_process:
         angle = angle in radians of clockwise rotation around its center """
     
     def __init__(self, image):
-        self.img = image
+        self.image = Image.open( image )
         self.tiles = {}
     
     
@@ -38,7 +41,7 @@ class Image_process:
         x1, y1 = (src_coor[0]-src_size[0]/2), (src_coor[1]-src_size[1]/2)
         x2, y2 = (src_coor[0]+src_size[0]/2), (src_coor[1]+src_size[1]/2)
         # crop
-        processed = self.img.crop((int(x1), int(y1), int(x2), int(y2)))
+        processed = self.image.crop((int(x1), int(y1), int(x2), int(y2)))
         # resize
         if dest_size != src_size:
             processed = processed.resize(dest_size, resample=Image.BILINEAR)
@@ -65,11 +68,11 @@ class Image_process:
     
     def get_width(self):
         """ return the width of the source image in pixels """
-        return self.img.size[0]
+        return self.image.size[0]
     
     
     def get_height(self):
         """ return the height of the source image in pixels """
-        return self.img.size[1]
+        return self.image.size[1]
 
 
