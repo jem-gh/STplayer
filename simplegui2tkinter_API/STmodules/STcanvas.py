@@ -83,4 +83,9 @@ class Canvas:
     def set_mouseclick_handler(self, mouse_handler):
         """ Call the mouse class when a left-click mouse event occurs """
         STmouse.Mouse(self.canvas, '<Button-1>', mouse_handler)
+    
+    
+    def set_mousedrag_handler(self, mouse_handler):
+        """ Call the mouse class when a drag mouse event occurs """
+        STmouse.Mouse(self.canvas, '<B1-Motion>', mouse_handler)
 
