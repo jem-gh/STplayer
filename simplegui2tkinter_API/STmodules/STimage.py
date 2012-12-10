@@ -44,7 +44,8 @@ class Image_process:
         processed = self.image.crop((int(x1), int(y1), int(x2), int(y2)))
         # resize
         if dest_size != src_size:
-            processed = processed.resize(dest_size, resample=Image.BILINEAR)
+            size = [int(dest_size[0]), int(dest_size[1])]
+            processed = processed.resize(size, resample=Image.BILINEAR)
         # rotate
         if angle_d:
             processed = processed.rotate(-angle_d, resample=Image.BICUBIC, expand=1)

@@ -10,7 +10,7 @@
 
 
 CANVAS = {
-    # Canvas background default color
+    # Default Canvas background color
     "BACKGROUND_COLOR": "Black", 
     # Adjust the Canvas refresh time in ms (66ms~15fps; 33ms~30fps; 17ms~60fps)
     "REFRESH_TIME": 17, 
@@ -28,6 +28,13 @@ WIDGET = {
 
 
 
+SOUND = {
+    # Default sound/music volume
+    "VOLUME": 1.0, 
+}
+
+
+
 # name of colors sometimes not recognized with their HEX values 
 COLORS_PROB = {
     "aqua":      '#00FFFF', 
@@ -41,7 +48,6 @@ COLORS_PROB = {
 def check_color(color):
     color = color.lower()
     return COLORS_PROB[color] if color in COLORS_PROB else color
-
 
 
 
@@ -118,6 +124,5 @@ KEY_MAP = {
     "down": 65364, 
     "space": 32, 
 }
-
 
 

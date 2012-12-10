@@ -70,16 +70,17 @@ class Frame:
         """ Call the Button class to add a button on the frame """
         
         width = self.check_width(width)
-        STbutton.Button(self.frame, text, button_handler, width)
+        return STbutton.Button(self.frame, text, button_handler, width)
     
     
     def add_input(self, text, input_handler, width):
         """ Call the input and label classes to add an input on the frame and 
             its corresponding label """
         
-        STlabel.Label(self.frame, text, self.control_width)
+        label = STlabel.Label(self.frame, text, self.control_width)
         width = self.check_width(width)
         STinput.Input(self.frame, input_handler, width)
+        return label
     
     
     def set_keydown_handler(self, key_handler):

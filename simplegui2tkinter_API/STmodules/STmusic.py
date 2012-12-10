@@ -11,6 +11,8 @@ try:
 except ImportError:
     print "pygame not found"
 
+from STlibrary import SOUND
+
 
 
 class Music:
@@ -19,8 +21,11 @@ class Music:
     
     def __init__(self, music):
         self.music = pygame.mixer.Sound(music)
-        self.music.set_volume( 1.0 )
+        self.music.set_volume( SOUND["VOLUME"] )
         self.is_playing = False
+        
+        # keep track if sound.pause() has already been used once
+        self.is_pause_used = False
     
     
     def play(self):
@@ -30,10 +35,15 @@ class Music:
     
     
     def pause(self):
-        print "sound.pause() not implemented yet"
+        # will print the statement only once
+        if not self.is_pause_used:
+            self.is_pause_used = True
+            print "sound.pause() not implemented yet... sound.rewind() has been called instead"
+        self.music.stop()
     
     
     def rewind(self):
+        self.is_playing = False
         self.music.stop()
     
     
