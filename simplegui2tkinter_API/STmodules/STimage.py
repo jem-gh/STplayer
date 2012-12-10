@@ -32,6 +32,11 @@ class Image_process:
     
     def __init__(self, image):
         self.image = Image.open( image )
+        
+        # convert "P" mode images to "RGBA" mode
+        if self.image.mode == "P":
+            self.image = self.image.convert("RGBA")
+        
         self.tiles = {}
     
     

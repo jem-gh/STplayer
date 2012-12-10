@@ -24,6 +24,10 @@ class Button:
     
     
     def set_text(self, text):
-        """ Update the label text """
+        """ Update the Button label text """
         self.button_text.set(text)
+    
+    def get_text(self):
+        """ Return the Button label text """
+        return self.button_text.get()
 

@@ -52,4 +52,3 @@ class Music:
         volume = 0.0 if volume < 0.0 else volume
         self.music.set_volume(volume)
 
-

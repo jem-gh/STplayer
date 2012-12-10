@@ -22,7 +22,7 @@
 # online Coursera course "An Introduction to Interactive Programming in Python" 
 # by Joe Warren, Scott Rixner, John Greiner, and Stephen Wong (Rice University) 
 # 
-# I want to thank Amín Guzmán for his valuable comments and suggestions on how 
+# I want to thank Amin Guzman for his valuable comments and suggestions on how 
 # to improve STconverter, which lead to the development of STconverter 2
 # 
 # For the latest version of STConverter 2 visit the repository on Github: 
@@ -63,5 +63,4 @@ def load_sound(link):
     """ Called from the user's code with the "simplegui.load_sound" method. """
     music = urllib.urlretrieve( link )[0]
     return STmusic.Music(music)
-
 
