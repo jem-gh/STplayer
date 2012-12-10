@@ -18,8 +18,8 @@
 # online Coursera course "An Introduction to Interactive Programming in Python" 
 # by Joe Warren, Scott Rixner, John Greiner, and Stephen Wong (Rice University) 
 # 
-# I want to thank Amín Guzmán for his comments and suggestions on how to improve 
-# STconverter, which lead to the development of STconverter 2
+# I want to thank Amín Guzmán for his valuable comments and suggestions on how 
+# to improve STconverter, which lead to the development of STconverter 2
 # 
 # For the latest version of STConverter 2 visit the repository on Github: 
 # https://github.com/jem-gh/STconverter-2
@@ -36,31 +36,79 @@ https://github.com/jem-gh/STconverter-2
 
 
 
+2. REQUIREMENTS
 
-STILL IN EARLY STAGES OF DEVELOPMENT!
-FEW METHODS ARE SUPPORTED SO FAR!
+2.1. To run STconverter
+
+- Python & Tkinter: STconverter will need Python installed on your machine with 
+the Tkinter module (generally installed by default with Python) to run correctly.
+http://www.python.org/download/
+
+
+2.2. Minimum configuration to run your program on your machine
+
+A simple rule of thumb is:
+										Additional module(s)	Works with Python
+your program has NO music and NO image		none					2.7 or 3
+your program has music						pygame					2.7 or 3
+your program has image						PIL						2.7 only
+
+- Music: if your SimpleGUI program plays music, you will need in addition to have 
+pygame installed on your machine to run your program (but is not required for the 
+conversion)
+http://www.pygame.org/download.shtml
+
+- Image: if your SimpleGUI program displays images, you will need in addition to 
+have the Python Imaging Library (PIL) with the ImageTk module installed on your 
+machine to run your program (but are not required for the conversion).
+Unfortunately, so far, PIL is not available for Python 3 and works only for 
+Python 2.2 to 2.7.
+http://www.pythonware.com/products/pil/index.htm
 
 
 
-HOW TO USE
+3. HOW TO USE
 
-Download the simplegui2tkinter.py API file.
 
-Copy it in the Python working directory.
-
-On your SimpleGUi file, just modify:
+Copy the API in your Python working directory
+In your SimpleGUI file, change:
 	import simplegui
 by
-	import simplegui2tkinter as simplegui
+	from simplegui2tkinter_API import simplegui2tkinter as simplegui
 
 
 
+4. MAJOR KNOWN ISSUES
 
-ACKNOWLEDGEMENT
+> frame.start() 
+frame.start() has to be your last line of code. If a timer.start() is written 
+afterwards, it won't start.
 
-I want to thank Amín Guzmán for his comments and suggestions on how to improve 
-the first version of STconverter, which lead to the development of STconverter 2
+> Music/Sound sound.pause() 
+sound.pause() hasn't been implemented yet.
+
+> Global Variables 
+SimpleGUI handles very well global variables which were assigned "locally" 
+in a function. This is generally not the case of your Python interpreter. 
+
+> Divisions 
+Division on Python 2.7 returns the floor of the quotient, whereas on Python 3 
+and SimpleGUI it returns the true division result. This could result on a 
+different behavior of your program depending on which Python you have installed. 
 
 
+
+5. TESTED ON...
+
+So far, it has been tested on:
+- Linux with Python 2.7.3, pygame 1.9.1, and PIL 1.1.7
+
+
+
+6. ACKNOWLEDGEMENT
+
+I want to thank Amín Guzmán for his valuable comments and suggestions on how to 
+improve the first version of STconverter, which lead to the development of 
+STconverter 2
 
 
