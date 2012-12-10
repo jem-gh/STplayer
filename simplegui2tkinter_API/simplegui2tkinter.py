@@ -22,8 +22,8 @@
 # online Coursera course "An Introduction to Interactive Programming in Python" 
 # by Joe Warren, Scott Rixner, John Greiner, and Stephen Wong (Rice University) 
 # 
-# I want to thank Amin Guzman for his comments and suggestions on how to improve 
-# STconverter, which lead to the development of STconverter 2
+# I want to thank Amín Guzmán for his valuable comments and suggestions on how 
+# to improve STconverter, which lead to the development of STconverter 2
 # 
 # For the latest version of STConverter 2 visit the repository on Github: 
 # https://github.com/jem-gh/STconverter-2
