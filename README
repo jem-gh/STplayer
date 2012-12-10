@@ -84,8 +84,8 @@ by
 frame.start() has to be your last line of code. If a timer.start() is written 
 afterwards, it won't start.
 
-> Music/Sound sound.pause() 
-sound.pause() hasn't been implemented yet.
+> Music/Sound
+MP3 musics and sounds are not fully supported yet. 
 
 > Global Variables 
 SimpleGUI handles very well global variables which were assigned "locally" 

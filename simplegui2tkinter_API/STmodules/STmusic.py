@@ -15,40 +15,77 @@ from STlibrary import SOUND
 
 
 
+# keep track of the current channel id available for a music/sound
+channel_id = 0
+
+
+
 class Music:
     """ Create a Sound object using the pygame library. 
-        Can Play, Stop, Set Volume at anytime. """
+        Can Play, Pause, Stop and Set Volume """
     
     def __init__(self, music):
-        self.music = pygame.mixer.Sound(music)
-        self.music.set_volume( SOUND["VOLUME"] )
-        self.is_playing = False
+        global channel_id
         
-        # keep track if sound.pause() has already been used once
-        self.is_pause_used = False
+        self.music = pygame.mixer.Sound(music)
+        self.is_using_channel = True
+        self.is_pause = False
+        
+        # if available, assign a channel to the sound/music or set fallback mode
+        try:
+            self.channel = pygame.mixer.Channel( channel_id )
+            channel_id += 1
+        except IndexError:
+            self.is_using_channel = False
+            print "Too many musics/sounds, no more available channel: fallback mode"
+        
+        # set sound/music volume to default volume
+        self.set_volume( SOUND["VOLUME"] )
     
     
     def play(self):
-        if not self.is_playing:
-            self.is_playing = True
+        """ start playing the sound or music in current channel if it's already 
+            not playing, or unpause if it was paused """
+        
+        if self.is_using_channel:
+            if not self.channel.get_sound() and not self.is_pause:
+                self.channel.play(self.music)
+            elif self.is_pause:
+                self.is_pause = False
+                self.channel.unpause()
+        
+        # fallback mode if no channel was available
+        if not self.is_using_channel:
             self.music.play()
     
     
     def pause(self):
-        # will print the statement only once
-        if not self.is_pause_used:
-            self.is_pause_used = True
-            print "sound.pause() not implemented yet... sound.rewind() has been called instead"
-        self.music.stop()
+        if self.is_using_channel:
+            self.is_pause = True
+            self.channel.pause()
+        
+        # fallback mode if no channel was available
+        if not self.is_using_channel:
+            print "pause not available in fallback mode "
     
     
     def rewind(self):
-        self.is_playing = False
-        self.music.stop()
+        if self.is_using_channel:
+            self.channel.stop()
+        
+        # fallback mode if no channel was available
+        if not self.is_using_channel:
+            self.music.stop()
     
     
     def set_volume(self, volume):
         volume = 1.0 if volume > 1.0 else volume
         volume = 0.0 if volume < 0.0 else volume
-        self.music.set_volume(volume)
+        
+        if self.is_using_channel:
+            self.channel.set_volume( volume )
+        
+        # fallback mode if no channel was available
+        if not self.is_using_channel:
+            self.music.set_volume( volume )
 
