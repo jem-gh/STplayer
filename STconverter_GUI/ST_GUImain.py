@@ -32,44 +32,131 @@
 ###############################################################################
 
 
-
+from os import path
 import Tkinter, tkFileDialog
+
+
+
+# text in Labels and Buttons
+l_intro = "STconverter 2 allows you to execute Python scripts written for "\
+        "SimpleGUI on a machine configured with Tkinter GUI instead. "
+
+l_info = "REMEMBER:\n\n"\
+       "- 'import simplegui'  has to be replaced with:\n"\
+       "  'from simplegui2tkinter_API import simplegui2tkinter as simplegui'\n\n"\
+       "- 'frame.start()'  has to be the last line of your code"
+
+b_open = "Select a file containing your SimpleGUI code"
+
+b_run = "Run!"
+l_run = "(loading the program can take few seconds... "\
+        "this window will close during loading)"
+
+l_author = "developped by  Jean-Etienne Morlighem"
+l_contact = "https://github.com/jem-gh"
 
 
 
 class Main:
     def __init__(self):
         
-        self.window_root2 = Tkinter.Tk()
-        self.window_root2.title("SimpleGUI/Tkinter converter '2'")
+        self.window_root = Tkinter.Tk()
+        self.window_root.title("SimpleGUI/Tkinter converter '2'")
         
-        self.frame2 = Tkinter.Frame(self.window_root2)
-        self.frame2.grid()
+        self.frame = Tkinter.Frame(self.window_root, padx=10, pady=10)
+        self.frame.grid()
         
         self.interface()
         
-        self.window_root2.mainloop()
+        self.window_root.mainloop()
     
     
     def interface(self):
-        """ """
+        """ draw all parts of the GUI """
         
-        label_open = Tkinter.Label(self.frame2, text="In development")
-        label_open.grid()
+        # block the resizing of the GUI 
+        self.window_root.resizable(0, 0)
         
-        button_open = Tkinter.Button(self.frame2, text="Select file", command=self.file_open)
-        button_open.grid()
+        # title
+        label_title = Tkinter.Label(self.frame, text="STconverter '2'", 
+                              font=("Serif", 18, "bold italic"), 
+                              foreground="#0000A3")
+        label_title.grid(row=0, columnspan=3)
         
-        self.text_code = Tkinter.Text(self.frame2)
-        self.text_code.grid()
+        # intro
+        label_intro = Tkinter.Label(self.frame, text=l_intro, padx=20, pady=20)
+        label_intro.grid(row=1, columnspan=3)
         
-        button_run = Tkinter.Button(self.frame2, text="Run", command=self.run_code)
-        button_run.grid()
+        # information
+        label_info = Tkinter.Label(self.frame, text=l_info, justify="left", 
+                             font=("Courier", 10), background="#E8E8E8", 
+                             borderwidth=1, relief="sunken", padx=20, pady=10)
+        label_info.grid(row=2, columnspan=3)
+        
+        # load a file
+        self.frame.rowconfigure(3, minsize=60)
+        button_open = Tkinter.Button(self.frame, text=b_open, width=40, pady=5, 
+                              font=("Serif", 10, "bold"), command=self.file_open)
+        button_open.grid(row=3, columnspan=3, sticky="S")
+        
+        self.frame.rowconfigure(4, minsize=60)
+        self.file_name = Tkinter.StringVar()
+        self.label_file = Tkinter.Label(self.frame, textvariable=self.file_name)
+        self.label_file.grid(row=4, columnspan=3)
+        
+        # run
+        self.button_run = Tkinter.Button(self.frame, text=b_run, width=40, 
+                                  font=("Serif", 10, "bold"), state="disabled", 
+                                  command=self.run_code)
+        self.button_run.grid(row=5, columnspan=3)
+        
+        self.frame.rowconfigure(6, minsize=50)
+        label_run = Tkinter.Label(self.frame, text=l_run)
+        label_run.grid(row=6, columnspan=3, sticky="N")
+        
+        # About and Quit
+        self.about_state = False
+        
+        button_about = Tkinter.Button(self.frame, text="About", width=10, 
+                                      command=self.change_about_state)
+        button_about.grid(row=7, column=0, rowspan=2)
+        
+        self.frame.rowconfigure(7, minsize=30)
+        self.label_author = Tkinter.Label(self.frame, state = "disabled", 
+                                    text=l_author, font=("Serif", 10, "italic"), 
+                                    foreground="#0000A3", 
+                                    disabledforeground="#D8D8D8")
+        self.label_author.grid(row=7, column=1, sticky="S")
+        
+        self.frame.rowconfigure(8, minsize=30)
+        self.label_contact = Tkinter.Label(self.frame, state = "disabled", 
+                                     text=l_contact, disabledforeground="#D8D8D8")
+        self.label_contact.grid(row=8, column=1, sticky="N")
+        
+        button_quit = Tkinter.Button(self.frame, text="Quit", width=10, 
+                                     command=quit)
+        button_quit.grid(row=7, column=2, rowspan=2)
+        
+    
+    
+    def change_about_state(self):
+        """ change About-associated label' state from Normal to Disable """
+        
+        if not self.about_state:
+            self.about_state = True
+            self.label_author.config(state = "normal")
+            self.label_contact.config(state = "normal")
+        
+        elif self.about_state:
+            self.about_state = False
+            self.label_author.config(state = "disabled")
+            self.label_contact.config(state = "disabled")
+    
     
     
     
     def file_open(self):
-        """  """
+        """ Open and load a file """
         
         input_loaded = tkFileDialog.askopenfile(title="Choose a file to convert")
         
@@ -77,12 +164,16 @@ class Main:
             self.input_data = input_loaded.read()
             self.input_path = input_loaded.name
             input_loaded.close()
-            self.text_code.insert("insert", self.input_data)
+            
+            name = path.split(self.input_path)[1]
+            
+            self.file_name.set(name)
+            self.button_run.configure(text="Run "+name+" !", state="normal")
     
     
     def run_code(self):
-        """ """
-        self.window_root2.destroy()
+        """ Close current window and execute the SimpleGUI code """
+        self.window_root.destroy()
         execfile(self.input_path, {})
 
 

@@ -63,3 +63,5 @@ def load_sound(link):
     """ Called from the user's code with the "simplegui.load_sound" method. """
     music = urllib.urlretrieve( link )[0]
     return STmusic.Music(music)
+
+
