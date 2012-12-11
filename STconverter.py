@@ -1,3 +1,4 @@
+#!/usr/bin/python
 
 # MIT License
 # Copyright (c) 2012 Jean-Etienne Morlighem <jem.nvnt@gmail.com>
@@ -33,33 +34,29 @@
 
 
 
-import urllib
+import sys
 
-from STmodules import STframe, STtimer, STimage, STmusic
-from STmodules.STlibrary import KEY_MAP
-
-
-
-def create_frame(title, canvas_width, canvas_height, control_width = 200):
-    """ Called from the user's code with the "simplegui.create_frame" method. """
-    return STframe.Frame(title, canvas_width, canvas_height, control_width = 200)
+from STconverter_GUI import ST_GUImain
 
 
 
-def create_timer(interval, timer_handler):
-    """ Called from the user's code with the "simplegui.create_timer" method. """
-    return STtimer.Timer(interval, timer_handler)
+if __name__ == "__main__":
+    
+    print "STconverter started!"
+    
+    try:
+        # when running STconverter in command line, start executing the 
+        # SimpleGUI program if given as argument
+        
+        file_simplegui = sys.argv[1]
+        print "SimpleGUI program is loading... Thanks for your patience!"
+        execfile( file_simplegui, {} )
+    
+    
+    except IndexError:
+        # when launching STconverter in GUI mode or from command line without 
+        # providing a SimpleGUI program, start the GUI
+        
+        print "STconverter GUI initializing!"
+        ST_GUImain.Main()
 
-
-
-def load_image(link):
-    """ Called from the user's code with the "simplegui.load_image" method. """
-    image = urllib.urlretrieve( link )[0]
-    return STimage.Image_process(image)
-
-
-
-def load_sound(link):
-    """ Called from the user's code with the "simplegui.load_sound" method. """
-    music = urllib.urlretrieve( link )[0]
-    return STmusic.Music(music)

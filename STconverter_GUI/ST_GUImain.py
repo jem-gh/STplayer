@@ -33,33 +33,57 @@
 
 
 
-import urllib
-
-from STmodules import STframe, STtimer, STimage, STmusic
-from STmodules.STlibrary import KEY_MAP
+import Tkinter, tkFileDialog
 
 
 
-def create_frame(title, canvas_width, canvas_height, control_width = 200):
-    """ Called from the user's code with the "simplegui.create_frame" method. """
-    return STframe.Frame(title, canvas_width, canvas_height, control_width = 200)
+class Main:
+    def __init__(self):
+        
+        self.window_root2 = Tkinter.Tk()
+        self.window_root2.title("SimpleGUI/Tkinter converter '2'")
+        
+        self.frame2 = Tkinter.Frame(self.window_root2)
+        self.frame2.grid()
+        
+        self.interface()
+        
+        self.window_root2.mainloop()
+    
+    
+    def interface(self):
+        """ """
+        
+        label_open = Tkinter.Label(self.frame2, text="In development")
+        label_open.grid()
+        
+        button_open = Tkinter.Button(self.frame2, text="Select file", command=self.file_open)
+        button_open.grid()
+        
+        self.text_code = Tkinter.Text(self.frame2)
+        self.text_code.grid()
+        
+        button_run = Tkinter.Button(self.frame2, text="Run", command=self.run_code)
+        button_run.grid()
+    
+    
+    
+    def file_open(self):
+        """  """
+        
+        input_loaded = tkFileDialog.askopenfile(title="Choose a file to convert")
+        
+        if input_loaded:
+            self.input_data = input_loaded.read()
+            self.input_path = input_loaded.name
+            input_loaded.close()
+            self.text_code.insert("insert", self.input_data)
+    
+    
+    def run_code(self):
+        """ """
+        self.window_root2.destroy()
+        execfile(self.input_path, {})
 
 
 
-def create_timer(interval, timer_handler):
-    """ Called from the user's code with the "simplegui.create_timer" method. """
-    return STtimer.Timer(interval, timer_handler)
-
-
-
-def load_image(link):
-    """ Called from the user's code with the "simplegui.load_image" method. """
-    image = urllib.urlretrieve( link )[0]
-    return STimage.Image_process(image)
-
-
-
-def load_sound(link):
-    """ Called from the user's code with the "simplegui.load_sound" method. """
-    music = urllib.urlretrieve( link )[0]
-    return STmusic.Music(music)

@@ -102,4 +102,3 @@ class Frame:
     def set_mousedrag_handler(self, mouse_handler):
         """ Forward the drag mouse event to the Canvas method """
         STcanvas.Canvas.set_mousedrag_handler(self.canvas, mouse_handler)
-
