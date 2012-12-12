@@ -56,6 +56,22 @@ l_author = "developped by  Jean-Etienne Morlighem"
 l_contact = "https://github.com/jem-gh"
 
 
+# text in messages
+l_file_OK_g = " ... OK!"
+l_file_OK_e = " doesn't seem correct, or doesn't need to be run in STconverter"
+
+l_PIL_OK_g = "Python Imaging Library (PIL)... found!"
+l_PIL_OK_e = "Python Imaging Library (PIL) not found... but your code seems using images"
+
+l_pygame_OK_g = "pygame... found!"
+l_pygame_OK_e = "pygame not found... but your code seems using sound/music"
+
+MESSAGES = {
+    "COLOR_ERROR": "", 
+    "COLOR_CORRECT": "#00CC00", 
+}
+
+
 
 class Main:
     def __init__(self):
@@ -99,43 +115,56 @@ class Main:
                               font=("Serif", 10, "bold"), command=self.file_open)
         button_open.grid(row=3, columnspan=3, sticky="S")
         
-        self.frame.rowconfigure(4, minsize=60)
-        self.file_name = Tkinter.StringVar()
-        self.label_file = Tkinter.Label(self.frame, textvariable=self.file_name)
-        self.label_file.grid(row=4, columnspan=3)
+        # label for code on software verification
+        self.frame.rowconfigure(4, minsize=40)
+        self.file_OK = Tkinter.StringVar()
+        self.label_file_OK = Tkinter.Label(self.frame, textvariable=self.file_OK, 
+                                           font=("Serif", 11, "bold"))
+        self.label_file_OK.grid(row=4, columnspan=3, sticky="S")
+        
+        self.PIL_OK = Tkinter.StringVar()
+        self.label_PIL_OK = Tkinter.Label(self.frame, textvariable=self.PIL_OK, 
+                                           font=("Serif", 11, "bold"), pady=5)
+        self.label_PIL_OK.grid(row=5, columnspan=3)
+        
+        self.frame.rowconfigure(6, minsize=40)
+        self.pygame_OK = Tkinter.StringVar()
+        self.label_pygame_OK = Tkinter.Label(self.frame, textvariable=self.pygame_OK, 
+                                             font=("Serif", 11, "bold"))
+        self.label_pygame_OK.grid(row=6, columnspan=3, sticky="N")
         
         # run
         self.button_run = Tkinter.Button(self.frame, text=b_run, width=40, 
                                   font=("Serif", 10, "bold"), state="disabled", 
                                   command=self.run_code)
-        self.button_run.grid(row=5, columnspan=3)
+        self.button_run.grid(row=7, columnspan=3)
         
-        self.frame.rowconfigure(6, minsize=50)
+        self.frame.rowconfigure(8, minsize=50)
         label_run = Tkinter.Label(self.frame, text=l_run)
-        label_run.grid(row=6, columnspan=3, sticky="N")
+        label_run.grid(row=8, columnspan=3, sticky="N")
         
         # About and Quit
         self.about_state = False
         
         button_about = Tkinter.Button(self.frame, text="About", width=10, 
                                       command=self.change_about_state)
-        button_about.grid(row=7, column=0, rowspan=2)
+        button_about.grid(row=9, column=0, rowspan=2)
         
-        self.frame.rowconfigure(7, minsize=30)
+        self.frame.rowconfigure(9, minsize=30)
         self.label_author = Tkinter.Label(self.frame, state = "disabled", 
                                     text=l_author, font=("Serif", 10, "italic"), 
                                     foreground="#0000A3", 
                                     disabledforeground="#D8D8D8")
-        self.label_author.grid(row=7, column=1, sticky="S")
+        self.label_author.grid(row=9, column=1, sticky="S")
         
-        self.frame.rowconfigure(8, minsize=30)
+        self.frame.rowconfigure(10, minsize=30)
         self.label_contact = Tkinter.Label(self.frame, state = "disabled", 
                                      text=l_contact, disabledforeground="#D8D8D8")
-        self.label_contact.grid(row=8, column=1, sticky="N")
+        self.label_contact.grid(row=10, column=1, sticky="N")
         
         button_quit = Tkinter.Button(self.frame, text="Quit", width=10, 
                                      command=quit)
-        button_quit.grid(row=7, column=2, rowspan=2)
+        button_quit.grid(row=9, column=2, rowspan=2)
         
     
     
@@ -153,28 +182,74 @@ class Main:
             self.label_contact.config(state = "disabled")
     
     
-    
-    
     def file_open(self):
         """ Open and load a file """
         
         input_loaded = tkFileDialog.askopenfile(title="Choose a file to convert")
         
         if input_loaded:
-            self.input_data = input_loaded.read()
+            # disable the Run button until the file is totally verified
+            self.button_run.configure(text=b_run, state="disabled")
+            
             self.input_path = input_loaded.name
             input_loaded.close()
             
-            name = path.split(self.input_path)[1]
+            # start checking the file
+            self.prepare_data()
+    
+    
+    def prepare_data(self):
+        """ will verify code and print on the window the results """
+        
+        with open(self.input_path, 'r') as self.file:
             
-            self.file_name.set(name)
-            self.button_run.configure(text="Run "+name+" !", state="normal")
+            name = path.split(self.input_path)[1]
+            content = self.file.read()
+            
+            is_code_OK = True
+            
+            # verify if the file seems legit to be SimpleGUI code
+            if "simplegui2tkinter" not in content or "simplegui." not in content:
+                self.file_OK.set(name + l_file_OK_e)
+                self.label_file_OK.configure(foreground=MESSAGES["COLOR_ERROR"])
+                self.file.close()
+                return
+            else:
+                self.file_OK.set(name + l_file_OK_g)
+                self.label_file_OK.configure(foreground=MESSAGES["COLOR_CORRECT"])
+            
+            # if images are used, check if PIL is installed on the computer
+            if "simplegui.load_image" in content:
+                try:
+                    from PIL import Image, ImageTk
+                    self.PIL_OK.set(l_PIL_OK_g)
+                    self.label_PIL_OK.configure(foreground=MESSAGES["COLOR_CORRECT"])
+                except ImportError:
+                    self.PIL_OK.set(l_PIL_OK_e)
+                    self.label_PIL_OK.configure(foreground=MESSAGES["COLOR_ERROR"])
+                    is_code_OK = False
+                    self.file.close()
+            
+            if "simplegui.load_sound" in content:
+                try:
+                    import pygame
+                    self.pygame_OK.set(l_pygame_OK_g)
+                    self.label_pygame_OK.configure(foreground=MESSAGES["COLOR_CORRECT"])
+                except ImportError:
+                    self.pygame_OK.set(l_pygame_OK_e)
+                    self.label_pygame_OK.configure(foreground=MESSAGES["COLOR_ERROR"])
+                    is_code_OK = False
+                    self.file.close()
+
+            # if no error arises during the verification, activate Run button
+            if is_code_OK:
+                self.button_run.configure(text="Run "+name+" !", state="normal")
     
     
     def run_code(self):
         """ Close current window and execute the SimpleGUI code """
         self.window_root.destroy()
         execfile(self.input_path, {})
-
+        self.file.close()
 
 
