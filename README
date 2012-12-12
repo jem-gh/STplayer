@@ -3,12 +3,12 @@
 # STplayer (aka STconverter 2) allows you to execute Python scripts written for 
 # SimpleGUI on a machine configured with Tkinter GUI instead. 
 # 
-# STconverter 2 is the successor of STconverter, and is different in such ways 
+# STplayer is the successor of STconverter, and is different in such ways that 
 # it has been entirely rewritten to handle with a totally different approach 
 # the "conversion". 
-# While the first version of STconverter was converting each SimpleGUI operation 
-# in the user code to be executable by Tkinter, STconverter 2 is an API between 
-# SimpleGUI operations and Tkinter. 
+# While STconverter was converting (by this, meaning rewriting) each SimpleGUI 
+# operation in the user code before the program is executed with Tkinter, 
+# STplayer is an API between SimpleGUI operations and Tkinter. 
 # 
 # "Tkinter is Python's de-facto standard GUI (Graphical User Interface) package"
 # (http://wiki.python.org/moin/TkInter)
@@ -19,39 +19,39 @@
 # by Joe Warren, Scott Rixner, John Greiner, and Stephen Wong (Rice University) 
 # 
 # I want to thank Amín Guzmán for his valuable comments and suggestions on how 
-# to improve STconverter, which lead to the development of STconverter 2
+# to improve STconverter, which lead to the development of STplayer
 # 
-# For the latest version of STConverter 2 visit the repository on Github: 
-# https://github.com/jem-gh/STconverter-2
+# For the latest version of STplayer visit the repository on Github: 
+# https://github.com/jem-gh/STplayer
 # 
-# STconverter 2 is developed by Jean-Etienne Morlighem
+# STplayer is developed by Jean-Etienne Morlighem (https://github.com/jem-gh)
 ###############################################################################
 
 
 
 1. LICENSE
-STconverter is under the MIT License
+STplayer (aka STconverter 2) is under the MIT License
 Copyright (c) 2012 Jean-Etienne Morlighem <jem.nvnt@gmail.com>
-https://github.com/jem-gh/STconverter-2
+https://github.com/jem-gh/STplayer
 
 
 
 2. REQUIREMENTS
 
-2.1. To run STconverter
+2.1. To run STplayer
 
-- Python & Tkinter: STconverter will need Python installed on your machine with 
-the Tkinter module (generally installed by default with Python) to run correctly.
+- Python & Tkinter: STplayer will need Python installed on your machine with 
+the Tkinter module (generally installed by default with Python).
 http://www.python.org/download/
 
 
 2.2. Minimum requirements to run your program on your machine
 
 A simple rule of thumb is:
-						Additional module(s)	Works with Python
-NO music and NO image	none					2.7 or 3
-WITH music				pygame					2.7 or 3
-WITH image				PIL						2.7 only
+                        Additional module     Works with Python
+NO music and NO image   none                  2.7 or 3
+WITH music              pygame                2.7 or 3
+WITH image              PIL                   2.7 only
 
 - Music: if your SimpleGUI program plays music, you will need in addition to have 
 pygame installed on your machine to run your program (but is not required for the 
@@ -70,17 +70,17 @@ http://www.pythonware.com/products/pil/index.htm
 3. HOW TO USE
 
 
-There are three ways of using STconverter 2
+There are three ways of using STplayer
 
 >> command line only:
-$ python /path/to/STconverter.py /path/to/your/SimpleGUI_file.py
+$ python /path/to/STplayer.py /path/to/your/SimpleGUI_file.py
 
 
 >> with a Graphical User Interface
-- by double clicking on STconverter.py
+- by double clicking on STplayer.py
 
 - or by typing in terminal
-$ python /path/to/STconverter.py
+$ python /path/to/STplayer.py
 
 
 >> API only
@@ -122,7 +122,6 @@ So far, it has been tested on:
 6. ACKNOWLEDGEMENT
 
 I want to thank Amín Guzmán for his valuable comments and suggestions on how to 
-improve the first version of STconverter, which lead to the development of 
-STconverter 2
+improve STconverter, which lead to the development of STplayer. 
 
 

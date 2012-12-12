@@ -1,7 +1,7 @@
 
-# MIT License
+# STplayer (aka STconverter 2) is under the MIT License
 # Copyright (c) 2012 Jean-Etienne Morlighem <jem.nvnt@gmail.com>
-# https://github.com/jem-gh/STconverter-2
+# https://github.com/jem-gh/STplayer
 
 
 

@@ -1,7 +1,7 @@
 
-# MIT License
+# STplayer (aka STconverter 2) is under the MIT License
 # Copyright (c) 2012 Jean-Etienne Morlighem <jem.nvnt@gmail.com>
-# https://github.com/jem-gh/STconverter-2
+# https://github.com/jem-gh/STplayer
 
 
 
@@ -13,13 +13,14 @@ TEXT = {
     
     
     # Title
-    "window_title": "SimpleGUI/Tkinter converter '2'", 
-    "l_title": "STconverter '2'", 
+    "window_title": "SimpleGUI/Tkinter player", 
+    "l_title": "STplayer", 
     
     
     # text in Labels and Buttons
-    "l_intro": "STconverter 2 allows you to execute Python scripts written for "\
-               "SimpleGUI on a machine configured with Tkinter GUI instead.", 
+    "l_intro": "STplayer (aka STconverter 2) allows you to execute Python "\
+               "scripts written for SimpleGUI on a machine configured with "\
+               "Tkinter GUI instead.", 
     
     "l_info": "REMEMBER:\n\n"\
               "    'frame.start()'  has to be the last line of your code\n\n"\

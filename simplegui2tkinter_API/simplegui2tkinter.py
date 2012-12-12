@@ -1,18 +1,18 @@
 
-# MIT License
+# STplayer (aka STconverter 2) is under the MIT License
 # Copyright (c) 2012 Jean-Etienne Morlighem <jem.nvnt@gmail.com>
-# https://github.com/jem-gh/STconverter-2
+# https://github.com/jem-gh/STplayer
 
 ###############################################################################
-# STconverter 2 allows you to execute Python scripts written for SimpleGUI on 
-# a machine configured with Tkinter GUI instead. 
+# STplayer (aka STconverter 2) allows you to execute Python scripts written for 
+# SimpleGUI on a machine configured with Tkinter GUI instead. 
 # 
-# STconverter 2 is the successor of STconverter, and is different in such ways 
+# STplayer is the successor of STconverter, and is different in such ways that 
 # it has been entirely rewritten to handle with a totally different approach 
 # the "conversion". 
-# While the first version of STconverter was converting each SimpleGUI operation 
-# in the user code to be executable by Tkinter, STconverter 2 is an API between 
-# SimpleGUI operations and Tkinter. 
+# While STconverter was converting (by this, meaning rewriting) each SimpleGUI 
+# operation in the user code before the program is executed with Tkinter, 
+# STplayer is an API between SimpleGUI operations and Tkinter. 
 # 
 # "Tkinter is Python's de-facto standard GUI (Graphical User Interface) package"
 # (http://wiki.python.org/moin/TkInter)
@@ -23,12 +23,12 @@
 # by Joe Warren, Scott Rixner, John Greiner, and Stephen Wong (Rice University) 
 # 
 # I want to thank Amin Guzman for his valuable comments and suggestions on how 
-# to improve STconverter, which lead to the development of STconverter 2
+# to improve STconverter, which lead to the development of STplayer
 # 
-# For the latest version of STConverter 2 visit the repository on Github: 
-# https://github.com/jem-gh/STconverter-2
+# For the latest version of STplayer visit the repository on Github: 
+# https://github.com/jem-gh/STplayer
 # 
-# STconverter 2 is developed by Jean-Etienne Morlighem
+# STplayer is developed by Jean-Etienne Morlighem (https://github.com/jem-gh)
 ###############################################################################
 
 
