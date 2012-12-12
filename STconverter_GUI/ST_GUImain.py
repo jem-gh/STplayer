@@ -67,7 +67,7 @@ l_pygame_OK_g = "pygame... found!"
 l_pygame_OK_e = "pygame not found... but your code seems using sound/music"
 
 MESSAGES = {
-    "COLOR_ERROR": "", 
+    "COLOR_ERROR": "#FF0000", 
     "COLOR_CORRECT": "#00CC00", 
 }
 
