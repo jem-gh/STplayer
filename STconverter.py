@@ -37,6 +37,8 @@
 import sys
 
 from STconverter_GUI import ST_GUImain
+from simplegui2tkinter_API import simplegui2tkinter
+sys.modules['simplegui'] = simplegui2tkinter
 
 
 

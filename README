@@ -45,13 +45,13 @@ the Tkinter module (generally installed by default with Python) to run correctly
 http://www.python.org/download/
 
 
-2.2. Minimum configuration to run your program on your machine
+2.2. Minimum requirements to run your program on your machine
 
 A simple rule of thumb is:
-										Additional module(s)	Works with Python
-your program has NO music and NO image		none					2.7 or 3
-your program has music						pygame					2.7 or 3
-your program has image						PIL						2.7 only
+						Additional module(s)	Works with Python
+NO music and NO image	none					2.7 or 3
+WITH music				pygame					2.7 or 3
+WITH image				PIL						2.7 only
 
 - Music: if your SimpleGUI program plays music, you will need in addition to have 
 pygame installed on your machine to run your program (but is not required for the 
@@ -70,11 +70,25 @@ http://www.pythonware.com/products/pil/index.htm
 3. HOW TO USE
 
 
-Copy the API in your Python working directory
-In your SimpleGUI file, change:
-	import simplegui
-by
-	from simplegui2tkinter_API import simplegui2tkinter as simplegui
+There are three ways of using STconverter 2
+
+>> command line only:
+$ python /path/to/STconverter.py /path/to/your/SimpleGUI_file.py
+
+
+>> with a Graphical User Interface
+- by double clicking on STconverter.py
+
+- or by typing in terminal
+$ python /path/to/STconverter.py
+
+
+>> API only
+If you want to use only the API without the program, you can do so by copying the 
+"simplegui2tkinter_API" folder in your Python working directory, and then update 
+your "PYTHONPATH" or change in your SimpleGUI the following line the import of 
+the "simplegui" module by:
+	from path.to.simplegui2tkinter_API import simplegui2tkinter as simplegui
 
 
 
@@ -84,17 +98,17 @@ by
 frame.start() has to be your last line of code. If a timer.start() is written 
 afterwards, it won't start.
 
-> Music/Sound
-MP3 musics and sounds are not fully supported yet. 
-
-> Global Variables 
+> GLOBAL VARIABLES
 SimpleGUI handles very well global variables which were assigned "locally" 
-in a function. This is generally not the case of your Python interpreter. 
+in a function. This is generally not the case of a Python interpreter. 
 
-> Divisions 
+> DIVISIONS
 Division on Python 2.7 returns the floor of the quotient, whereas on Python 3 
 and SimpleGUI it returns the true division result. This could result on a 
 different behavior of your program depending on which Python you have installed. 
+
+> MUSIC/SOUND
+MP3 musics and sounds are not fully supported yet. 
 
 
 

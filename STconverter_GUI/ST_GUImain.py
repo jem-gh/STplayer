@@ -35,41 +35,7 @@
 from os import path
 import Tkinter, tkFileDialog
 
-
-
-# text in Labels and Buttons
-l_intro = "STconverter 2 allows you to execute Python scripts written for "\
-        "SimpleGUI on a machine configured with Tkinter GUI instead. "
-
-l_info = "REMEMBER:\n\n"\
-       "- 'import simplegui'  has to be replaced with:\n"\
-       "  'from simplegui2tkinter_API import simplegui2tkinter as simplegui'\n\n"\
-       "- 'frame.start()'  has to be the last line of your code"
-
-b_open = "Select a file containing your SimpleGUI code"
-
-b_run = "Run!"
-l_run = "(loading the program can take few seconds... "\
-        "this window will close during loading)"
-
-l_author = "developped by  Jean-Etienne Morlighem"
-l_contact = "https://github.com/jem-gh"
-
-
-# text in messages
-l_file_OK_g = " ... OK!"
-l_file_OK_e = " doesn't seem correct, or doesn't need to be run in STconverter"
-
-l_PIL_OK_g = "Python Imaging Library (PIL)... found!"
-l_PIL_OK_e = "Python Imaging Library (PIL) not found... but your code seems using images"
-
-l_pygame_OK_g = "pygame... found!"
-l_pygame_OK_e = "pygame not found... but your code seems using sound/music"
-
-MESSAGES = {
-    "COLOR_ERROR": "#FF0000", 
-    "COLOR_CORRECT": "#00CC00", 
-}
+from ST_GUItext import TEXT
 
 
 
@@ -77,7 +43,7 @@ class Main:
     def __init__(self):
         
         self.window_root = Tkinter.Tk()
-        self.window_root.title("SimpleGUI/Tkinter converter '2'")
+        self.window_root.title(TEXT["window_title"])
         
         self.frame = Tkinter.Frame(self.window_root, padx=10, pady=10)
         self.frame.grid()
@@ -94,24 +60,25 @@ class Main:
         self.window_root.resizable(0, 0)
         
         # title
-        label_title = Tkinter.Label(self.frame, text="STconverter '2'", 
+        label_title = Tkinter.Label(self.frame, text=TEXT["l_title"], 
                               font=("Serif", 18, "bold italic"), 
-                              foreground="#0000A3")
+                              foreground=TEXT["COLOR_TITLE"])
         label_title.grid(row=0, columnspan=3)
         
         # intro
-        label_intro = Tkinter.Label(self.frame, text=l_intro, padx=20, pady=20)
+        label_intro = Tkinter.Label(self.frame, text=TEXT["l_intro"], 
+                                    padx=20, pady=20)
         label_intro.grid(row=1, columnspan=3)
         
         # information
-        label_info = Tkinter.Label(self.frame, text=l_info, justify="left", 
-                             font=("Courier", 10), background="#E8E8E8", 
-                             borderwidth=1, relief="sunken", padx=20, pady=10)
+        label_info = Tkinter.Label(self.frame, text=TEXT["l_info"], padx=20, 
+                             pady=10, justify="left", font=("Courier", 10), 
+                             background="#E8E8E8", borderwidth=1, relief="sunken")
         label_info.grid(row=2, columnspan=3)
         
         # load a file
         self.frame.rowconfigure(3, minsize=60)
-        button_open = Tkinter.Button(self.frame, text=b_open, width=40, pady=5, 
+        button_open = Tkinter.Button(self.frame, text=TEXT["b_open"], width=40, 
                               font=("Serif", 10, "bold"), command=self.file_open)
         button_open.grid(row=3, columnspan=3, sticky="S")
         
@@ -129,18 +96,19 @@ class Main:
         
         self.frame.rowconfigure(6, minsize=40)
         self.pygame_OK = Tkinter.StringVar()
-        self.label_pygame_OK = Tkinter.Label(self.frame, textvariable=self.pygame_OK, 
+        self.label_pygame_OK = Tkinter.Label(self.frame, 
+                                             textvariable=self.pygame_OK, 
                                              font=("Serif", 11, "bold"))
         self.label_pygame_OK.grid(row=6, columnspan=3, sticky="N")
         
         # run
-        self.button_run = Tkinter.Button(self.frame, text=b_run, width=40, 
-                                  font=("Serif", 10, "bold"), state="disabled", 
-                                  command=self.run_code)
+        self.button_run = Tkinter.Button(self.frame, text=TEXT["b_run"], 
+                                  width=40, font=("Serif", 10, "bold"), 
+                                  state="disabled", command=self.run_code)
         self.button_run.grid(row=7, columnspan=3)
         
         self.frame.rowconfigure(8, minsize=50)
-        label_run = Tkinter.Label(self.frame, text=l_run)
+        label_run = Tkinter.Label(self.frame, text=TEXT["l_run"])
         label_run.grid(row=8, columnspan=3, sticky="N")
         
         # About and Quit
@@ -152,20 +120,20 @@ class Main:
         
         self.frame.rowconfigure(9, minsize=30)
         self.label_author = Tkinter.Label(self.frame, state = "disabled", 
-                                    text=l_author, font=("Serif", 10, "italic"), 
-                                    foreground="#0000A3", 
+                                    text=TEXT["l_author"], foreground="#0000A3", 
+                                    font=("Serif", 10, "italic"), 
                                     disabledforeground="#D8D8D8")
         self.label_author.grid(row=9, column=1, sticky="S")
         
         self.frame.rowconfigure(10, minsize=30)
-        self.label_contact = Tkinter.Label(self.frame, state = "disabled", 
-                                     text=l_contact, disabledforeground="#D8D8D8")
+        self.label_contact = Tkinter.Label(self.frame, text=TEXT["l_contact"], 
+                                     state = "disabled", 
+                                     disabledforeground="#D8D8D8")
         self.label_contact.grid(row=10, column=1, sticky="N")
         
         button_quit = Tkinter.Button(self.frame, text="Quit", width=10, 
                                      command=quit)
         button_quit.grid(row=9, column=2, rowspan=2)
-        
     
     
     def change_about_state(self):
@@ -188,18 +156,22 @@ class Main:
         input_loaded = tkFileDialog.askopenfile(title="Choose a file to convert")
         
         if input_loaded:
-            # disable the Run button until the file is totally verified
-            self.button_run.configure(text=b_run, state="disabled")
-            
             self.input_path = input_loaded.name
             input_loaded.close()
+            
+            # disable the Run button and reset all information labels until the 
+            # file is totally verified
+            self.button_run.configure(text=TEXT["b_run"], state="disabled")
+            self.file_OK.set("")
+            self.PIL_OK.set("")
+            self.pygame_OK.set("")
             
             # start checking the file
             self.prepare_data()
     
     
     def prepare_data(self):
-        """ will verify code and print on the window the results """
+        """ Verify the code and test if required module are installed """
         
         with open(self.input_path, 'r') as self.file:
             
@@ -209,35 +181,46 @@ class Main:
             is_code_OK = True
             
             # verify if the file seems legit to be SimpleGUI code
-            if "simplegui2tkinter" not in content or "simplegui." not in content:
-                self.file_OK.set(name + l_file_OK_e)
-                self.label_file_OK.configure(foreground=MESSAGES["COLOR_ERROR"])
+            if "simplegui" not in content:
+                self.file_OK.set(name + TEXT["l_file_OK_e"])
+                self.label_file_OK.configure(
+                                   foreground=TEXT["COLOR_ERROR"])
                 self.file.close()
                 return
             else:
-                self.file_OK.set(name + l_file_OK_g)
-                self.label_file_OK.configure(foreground=MESSAGES["COLOR_CORRECT"])
+                self.file_OK.set(name + TEXT["l_file_OK_g"])
+                self.label_file_OK.configure(
+                                   foreground=TEXT["COLOR_CORRECT"])
             
-            # if images are used, check if PIL is installed on the computer
+            # if images are used, check if PIL is installed 
             if "simplegui.load_image" in content:
                 try:
                     from PIL import Image, ImageTk
-                    self.PIL_OK.set(l_PIL_OK_g)
-                    self.label_PIL_OK.configure(foreground=MESSAGES["COLOR_CORRECT"])
+                    self.PIL_OK.set(TEXT["l_PIL_OK_g"])
+                    self.label_PIL_OK.configure(
+                                      foreground=TEXT["COLOR_CORRECT"])
                 except ImportError:
-                    self.PIL_OK.set(l_PIL_OK_e)
-                    self.label_PIL_OK.configure(foreground=MESSAGES["COLOR_ERROR"])
+                    self.PIL_OK.set(TEXT["l_PIL_OK_e"])
+                    self.label_PIL_OK.configure(
+                                      foreground=TEXT["COLOR_ERROR"])
                     is_code_OK = False
                     self.file.close()
             
+            # if sounds/musics are used, check if pygame is installed 
             if "simplegui.load_sound" in content:
                 try:
                     import pygame
-                    self.pygame_OK.set(l_pygame_OK_g)
-                    self.label_pygame_OK.configure(foreground=MESSAGES["COLOR_CORRECT"])
+                    self.pygame_OK.set(TEXT["l_pygame_OK_g"])
+                    self.label_pygame_OK.configure(
+                                         foreground=TEXT["COLOR_CORRECT"])
+                    if "mp3" in content or "MP3" in content:
+                        self.pygame_OK.set(TEXT["l_pygame_OK_e2"])
+                        self.label_pygame_OK.configure(
+                                             foreground=TEXT["COLOR_ERROR"])
                 except ImportError:
-                    self.pygame_OK.set(l_pygame_OK_e)
-                    self.label_pygame_OK.configure(foreground=MESSAGES["COLOR_ERROR"])
+                    self.pygame_OK.set(TEXT["l_pygame_OK_e1"])
+                    self.label_pygame_OK.configure(
+                                         foreground=TEXT["COLOR_ERROR"])
                     is_code_OK = False
                     self.file.close()
 
