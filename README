@@ -1,7 +1,7 @@
 
 ###############################################################################
-# STconverter 2 allows you to execute Python scripts written for SimpleGUI on 
-# a machine configured with Tkinter GUI instead. 
+# STplayer (aka STconverter 2) allows you to execute Python scripts written for 
+# SimpleGUI on a machine configured with Tkinter GUI instead. 
 # 
 # STconverter 2 is the successor of STconverter, and is different in such ways 
 # it has been entirely rewritten to handle with a totally different approach 
